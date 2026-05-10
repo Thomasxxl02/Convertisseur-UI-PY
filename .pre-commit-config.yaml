@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: check-ui-generated-sync
+        name: Vérifie la synchro convertisseur.ui -> convertisseur.py
+        entry: scripts/check_ui_generated_sync.sh
+        language: system
+        pass_filenames: false
+        always_run: true

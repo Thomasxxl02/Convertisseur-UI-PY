@@ -1,0 +1,43 @@
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+exclude = '''
+/( 
+    \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.pylint.main]
+py-version = "3.11"
+ignore-paths = [
+  '^\\.venv/',
+  '^build/',
+  '^dist/',
+]
+jobs = 0
+
+[tool.pylint.messages_control]
+disable = [
+  "C0114",  # missing-module-docstring
+  "C0115",  # missing-class-docstring
+  "C0116",  # missing-function-docstring
+]
+
+[tool.pylint.format]
+max-line-length = 100
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [".venv", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+markers = [
+  "slow: tests d'integration reels pouvant etre plus lents",
+]

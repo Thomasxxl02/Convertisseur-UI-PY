@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Convertisseur UI → Python – macOS Designer</string>
+    <string>Convertisseur UI vers Python - édition macOS</string>
   </property>
   <property name="styleSheet">
    <string notr="true">
@@ -131,6 +131,11 @@ QMenu::item:selected {
     background-color: #007aff;
     color: white;
 }
+QLabel#validationMessageLabel {
+    color: #c62828;
+    font-size: 12px;
+    font-weight: 500;
+}
    </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -229,6 +234,19 @@ QMenu::item:selected {
         </layout>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="validationMessageLabel">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="visible">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item>

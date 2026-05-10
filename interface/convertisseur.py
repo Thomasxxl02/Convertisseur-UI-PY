@@ -146,6 +146,11 @@ class Ui_MainWindow(object):
 "    color: wh"
                         "ite;\n"
 "}\n"
+"QLabel#validationMessageLabel {\n"
+"    color: #c62828;\n"
+"    font-size: 12px;\n"
+"    font-weight: 500;\n"
+"}\n"
 "   ")
         self.actionApropos = QAction(MainWindow)
         self.actionApropos.setObjectName(u"actionApropos")
@@ -214,6 +219,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.groupBoxDest)
 
+        self.validationMessageLabel = QLabel(self.centralwidget)
+        self.validationMessageLabel.setObjectName(u"validationMessageLabel")
+        self.validationMessageLabel.setWordWrap(True)
+        self.validationMessageLabel.setVisible(False)
+
+        self.verticalLayout_2.addWidget(self.validationMessageLabel)
+
         self.convertButton = QPushButton(self.centralwidget)
         self.convertButton.setObjectName(u"convertButton")
         self.convertButton.setMinimumHeight(42)
@@ -249,7 +261,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Convertisseur UI \u2192 Python \u2013 ", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Convertisseur UI vers Python - \u00e9dition macOS", None))
         self.actionApropos.setText(QCoreApplication.translate("MainWindow", u"\u00c0 propos", None))
         self.groupBoxSource.setTitle(QCoreApplication.translate("MainWindow", u"Fichier source (.ui)", None))
         self.uiFileLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Chemin vers le fichier .ui (ex: interface.ui)", None))
@@ -262,6 +274,7 @@ class Ui_MainWindow(object):
         self.browseOutputDirButton.setObjectName(QCoreApplication.translate("MainWindow", u"secondaryButton", None))
         self.labelOutName.setText(QCoreApplication.translate("MainWindow", u"Nom du fichier .py :", None))
         self.outputNameLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"ex: mon_ui (sans extension)", None))
+        self.validationMessageLabel.setText("")
         self.convertButton.setText(QCoreApplication.translate("MainWindow", u"Convertir .ui \u2192 .py", None))
         self.convertButton.setObjectName(QCoreApplication.translate("MainWindow", u"convertButton", None))
         self.logTextEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Les messages de conversion s'afficheront ici...", None))
@@ -270,3 +283,35 @@ class Ui_MainWindow(object):
         self.menuQuitter.setTitle(QCoreApplication.translate("MainWindow", u"Quitter", None))
     # retranslateUi
 
+
+
+# VS Code preview entry point for the generated UI module.
+from PySide6 import QtWidgets as _QtWidgets
+
+def _create_preview_widget():
+    widget_class = getattr(_QtWidgets, "QMainWindow", None)
+    if widget_class is None:
+        raise RuntimeError("Classe Qt introuvable pour l'aperçu: QMainWindow")
+
+    widget = widget_class()
+    ui = Ui_MainWindow()
+    ui.setupUi(widget)
+    return widget
+
+def main() -> int:
+    import sys
+
+    app = _QtWidgets.QApplication.instance()
+    owns_app = app is None
+    if app is None:
+        app = _QtWidgets.QApplication(sys.argv)
+
+    preview_widget = _create_preview_widget()
+    preview_widget.show()
+
+    if owns_app:
+        return app.exec()
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())
