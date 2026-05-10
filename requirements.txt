@@ -1,0 +1,38 @@
+# Déploiements
+PySide6==6.11.0 # Supporte Python 3.8+
+shiboken6==6.11.0
+pyinstaller>=6.0.0      # empaqueter en .exe / .app
+nuitka>=2.0.0           # alternative plus rapide (compilation)
+
+
+
+#Tests et debugging
+pytest>=7.4.0           # tests unitaires
+pytest-qt>=4.2.0        # simulateur d’événements Qt pour tester l’interface
+qasync>=0.24.0          # intégration asyncio dans PySide6
+black>=23.0
+pylint>=2.17
+
+# Manipulation d'images / icônes
+Pillow>=10.0.0          # charger/sauvegarder des formats image variés (PNG, JPEG, WebP…)
+qrcode>=7.4.2           # générer des QR codes
+
+# Base de données et stockage
+SQLAlchemy>=2.0.0       # ORM pour SQLite/PostgreSQL/MySQL
+alembic>=1.12.0         # migrations de schéma
+pandas>=2.0.0           # manipulation de données (export/import facile Excel/CSV)
+
+# Graphiques avancés (autres que QtCharts)
+matplotlib>=3.7.0       # intégration via FigureCanvasQTAgg
+pyqtgraph>=0.13.0       # tracés rapides et interactifs, très complémentaire à PySide6
+
+# API REST / réseau
+requests>=2.31.0        # appels HTTP pour récupérer des données
+httpx>=0.25.0           # asynchrone si votre application utilise QAsync
+websockets>=11.0.0     # communication temps réel via WebSocket
+
+# Utilitaires divers
+darkdetect>=0.8.0       # détecter le thème système (dark mode) – Windows/macOS
+pyperclip>=1.8.2        # accès presse-papier (complément à QClipboard)
+send2trash>=1.8.2       # envoyer des fichiers à la corbeille
+

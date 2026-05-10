@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Convertisseur UI Py
+Comment=Lance le convertisseur UI vers Python
+Exec=/home/thomas/Bureau/Espace\ code/Convertisseur\ ui\ py/executer_ubuntu.sh
+Path=/home/thomas/Bureau/Espace code/Convertisseur ui py
+Icon=/home/thomas/Bureau/Espace code/Convertisseur ui py/convertir.py.png
+Terminal=false
+Categories=Development;
+Keywords=Qt;PySide6;UI;Convertisseur;
+StartupNotify=true
