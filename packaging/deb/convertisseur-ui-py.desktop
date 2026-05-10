@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Convertisseur UI PY
+Comment=Convertisseur de fichiers Qt Designer .ui vers modules Python .py
+Exec=/usr/local/bin/convertisseur-ui-py
+Icon=convertisseur-ui-py
+Categories=Utility;Development;
+Terminal=false
+StartupNotify=true

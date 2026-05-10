@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page de don</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #0d1b2a;
+      --bg-2: #1b263b;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --brand: #0ea5e9;
+      --brand-2: #14b8a6;
+      --ok: #16a34a;
+      --danger: #dc2626;
+      --ring: rgba(14, 165, 233, 0.35);
+      --radius: 18px;
+      --shadow: 0 18px 45px rgba(2, 6, 23, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 600px at -10% -10%, rgba(20, 184, 166, 0.32), transparent 60%),
+        radial-gradient(1100px 800px at 120% 0%, rgba(14, 165, 233, 0.3), transparent 55%),
+        linear-gradient(155deg, var(--bg-1), var(--bg-2));
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    .ambient-shape {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(50px);
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+      animation: float 9s ease-in-out infinite;
+    }
+
+    .ambient-shape.one {
+      width: 260px;
+      height: 260px;
+      background: #14b8a6;
+      top: 8%;
+      left: 4%;
+    }
+
+    .ambient-shape.two {
+      width: 300px;
+      height: 300px;
+      background: #0ea5e9;
+      right: 4%;
+      bottom: 9%;
+      animation-delay: 1.4s;
+    }
+
+    .donation-shell {
+      width: min(980px, 100%);
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      position: relative;
+      z-index: 1;
+      animation: rise 650ms ease both;
+    }
+
+    .hero {
+      background:
+        linear-gradient(180deg, rgba(2, 6, 23, 0.1), rgba(2, 6, 23, 0.28)),
+        linear-gradient(135deg, #0ea5e9, #14b8a6);
+      color: #f8fafc;
+      padding: 42px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      width: fit-content;
+    }
+
+    .hero h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.55;
+      color: rgba(248, 250, 252, 0.94);
+      max-width: 36ch;
+    }
+
+    .impact-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 14px;
+    }
+
+    .impact-list li {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+
+    .form-zone {
+      padding: 34px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+    }
+
+    .form-zone h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      font-family: "Fraunces", Georgia, serif;
+    }
+
+    .intro {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .amounts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .amount-btn {
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .amount-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand);
+      background: #ecfeff;
+    }
+
+    .amount-btn.active {
+      border-color: var(--brand);
+      background: #e0f2fe;
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      font-size: 13px;
+      color: #1e293b;
+      font-weight: 500;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font: inherit;
+      color: var(--text);
+      background: #ffffff;
+      outline: none;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .submit {
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 16px;
+      background: linear-gradient(95deg, var(--brand), var(--brand-2));
+      color: #f8fafc;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: transform 160ms ease, filter 160ms ease;
+    }
+
+    .submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit:hover {
+      transform: translateY(-2px);
+      filter: saturate(1.12);
+    }
+
+    .small-note {
+      margin-top: 12px;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .feedback {
+      min-height: 24px;
+      margin: 4px 0 0;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .feedback.ok {
+      color: var(--ok);
+    }
+
+    .feedback.err {
+      color: var(--danger);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 920px) {
+      .donation-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 30px 24px;
+      }
+
+      .form-zone {
+        padding: 24px;
+      }
+
+      .amounts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-shape one"></div>
+  <div class="ambient-shape two"></div>
+
+  <main class="donation-shell" aria-label="Page de don">
+    <section class="hero">
+      <div>
+        <span class="kicker">Don solidaire</span>
+        <h1>Merci de soutenir notre mission</h1>
+      </div>
+      <p>
+        Chaque contribution nous aide a maintenir le projet, publier des mises a jour
+        regulieres et offrir plus de ressources gratuites.
+      </p>
+      <ul class="impact-list">
+        <li>15 EUR: hebergement d'un mois pour la plateforme</li>
+        <li>30 EUR: production de documentation detaillee</li>
+        <li>60 EUR: support utilisateur accelere</li>
+      </ul>
+    </section>
+
+    <section class="form-zone">
+      <h2>Faire un don</h2>
+      <p class="intro">Choisis un montant, complete le formulaire, puis valide ta contribution via Stripe Checkout.</p>
+
+      <form id="donation-form" class="grid" novalidate>
+        <div class="amounts" role="group" aria-label="Montants suggerees">
+          <button class="amount-btn" type="button" data-amount="10">10 EUR</button>
+          <button class="amount-btn" type="button" data-amount="25">25 EUR</button>
+          <button class="amount-btn active" type="button" data-amount="50">50 EUR</button>
+          <button class="amount-btn" type="button" data-amount="100">100 EUR</button>
+        </div>
+
+        <label>
+          Montant libre (EUR)
+          <input id="amount" name="amount" type="number" min="1" step="1" value="50" required>
+        </label>
+
+        <div class="split">
+          <label>
+            Nom complet
+            <input id="fullName" name="fullName" type="text" placeholder="Ton nom" required>
+          </label>
+          <label>
+            Email
+            <input id="email" name="email" type="email" placeholder="ton@email.com" required>
+          </label>
+        </div>
+
+        <input type="hidden" name="paymentMethod" value="stripe_checkout">
+
+        <label>
+          Message (optionnel)
+          <textarea id="message" name="message" rows="3" placeholder="Un petit mot de soutien"></textarea>
+        </label>
+
+        <button id="submit-button" class="submit" type="submit">Payer avec Stripe</button>
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+
+        <p class="small-note">
+          Paiement securise via Stripe Checkout. Tu peux aussi brancher des webhooks
+          pour recevoir les confirmations de paiement cote serveur.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const amountButtons = document.querySelectorAll('.amount-btn');
+    const amountInput = document.getElementById('amount');
+    const form = document.getElementById('donation-form');
+    const feedback = document.getElementById('feedback');
+    const submitButton = document.getElementById('submit-button');
+
+    amountButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        amountButtons.forEach((b) => b.classList.remove('active'));
+        button.classList.add('active');
+        amountInput.value = button.dataset.amount;
+      });
+    });
+
+    amountInput.addEventListener('input', () => {
+      amountButtons.forEach((b) => {
+        b.classList.toggle('active', b.dataset.amount === amountInput.value);
+      });
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const amount = Number(formData.get('amount'));
+      const fullName = String(formData.get('fullName') || '').trim();
+      const email = String(formData.get('email') || '').trim();
+      const message = String(formData.get('message') || '').trim();
+
+      feedback.className = 'feedback';
+
+      if (!Number.isFinite(amount) || amount < 1) {
+        feedback.textContent = 'Merci de saisir un montant valide (minimum 1 EUR).';
+        feedback.classList.add('err');
+        return;
+      }
+
+      if (!fullName || !email) {
+        feedback.textContent = 'Merci de completer les champs obligatoires.';
+        feedback.classList.add('err');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Redirection en cours...';
+
+      try {
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            amount,
+            fullName,
+            email,
+            message
+          })
+        });
+
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload.error || 'Impossible de lancer le paiement.');
+        }
+
+        if (!payload.checkoutUrl) {
+          throw new Error('URL Stripe manquante.');
+        }
+
+        feedback.textContent = 'Redirection vers Stripe...';
+        feedback.classList.add('ok');
+        window.location.href = payload.checkoutUrl;
+      } catch (error) {
+        feedback.textContent = (error && error.message) || 'Erreur inattendue.';
+        feedback.classList.add('err');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Payer avec Stripe';
+      }
+    });
+  </script>
+</body>
+</html>

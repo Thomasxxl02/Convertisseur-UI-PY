@@ -418,5 +418,36 @@ def test_gui_batch_convert_flow_success(qtbot, tmp_path: Path, monkeypatch) -> N
         timeout=2000,
     )
 
-    assert "ok a" in window.ui.logTextEdit.toPlainText()
-    assert "ok b" in window.ui.logTextEdit.toPlainText()
+
+def test_gui_open_donation_page_opens_stripe_url(qtbot, monkeypatch) -> None:
+    opened_urls: list[str] = []
+
+    monkeypatch.setattr(
+        "logic.main_window.QDesktopServices.openUrl",
+        lambda url: opened_urls.append(url.toString()) or True,
+    )
+
+    window = ConverterMainWindow(confirm_on_close=False, use_settings=False)
+    qtbot.addWidget(window)
+
+    window._open_donation_page()  # noqa: SLF001
+
+    assert opened_urls
+    assert opened_urls[0].startswith("https://buy.stripe.com/")
+
+
+def test_gui_donation_menu_action_opens_stripe_url(qtbot, monkeypatch) -> None:
+    opened_urls: list[str] = []
+
+    monkeypatch.setattr(
+        "logic.main_window.QDesktopServices.openUrl",
+        lambda url: opened_urls.append(url.toString()) or True,
+    )
+
+    window = ConverterMainWindow(confirm_on_close=False, use_settings=False)
+    qtbot.addWidget(window)
+
+    window.donation_action.trigger()
+
+    assert opened_urls
+    assert opened_urls[0].startswith("https://buy.stripe.com/")

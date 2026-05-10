@@ -1,0 +1,9 @@
+Package: convertisseur-ui-py
+Version: __VERSION__
+Section: utils
+Priority: optional
+Architecture: __ARCH__
+Maintainer: __MAINTAINER__
+Depends: libglib2.0-0, libxkbcommon-x11-0
+Description: Convertisseur UI vers Python (PySide6)
+ Application desktop PySide6 pour convertir des fichiers .ui en .py.

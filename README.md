@@ -80,6 +80,66 @@ Le workflow CI execute automatiquement:
 - verification de synchro `convertisseur.ui -> convertisseur.py`
 - tests pytest
 
+## Page de don Stripe Checkout
+
+Une page de don web est disponible dans `page_don.html`.
+
+### Installation des dependances dediees
+
+```bash
+source .venv/bin/activate
+pip install -r requirements-don.txt
+```
+
+### Variables d'environnement
+
+Definis au minimum:
+
+```bash
+export STRIPE_SECRET_KEY="sk_test_xxx"
+```
+
+Configuration produit/taxe par defaut deja integree:
+
+- STRIPE_PRODUCT_ID=prod_UUeI06vtxJmMsz
+- STRIPE_PRODUCT_TAX_CODE=txcd_10000000
+
+Tu peux les surcharger avec des variables d'environnement si besoin.
+
+Tu peux t'aider de `/.env.donation.example` pour les autres options.
+
+### Lancement local
+
+```bash
+source .venv/bin/activate
+python donate_server.py
+```
+
+Puis ouvre `http://localhost:8787`.
+
+## Packaging Linux
+
+Scripts prets a l'emploi:
+
+- `scripts/build_linux_binary.sh`: build PyInstaller Linux (onedir)
+- `scripts/build_deb.sh`: build paquet Debian `.deb`
+
+### Generer le binaire Linux
+
+```bash
+scripts/build_linux_binary.sh
+```
+
+Sortie attendue: `dist/ConvertisseurUiPy/ConvertisseurUiPy`
+
+### Generer le paquet Debian
+
+```bash
+scripts/build_deb.sh
+```
+
+Sortie attendue: `dist/convertisseur-ui-py_<version>_<arch>.deb`
+
 ## Contribution
 
 Les contributions sont bienvenues. Ouvrez une issue ou une pull request en decrivant clairement:

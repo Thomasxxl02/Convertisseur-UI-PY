@@ -27,6 +27,7 @@ from logic.validation import (
 
 
 LOGGER = logging.getLogger(__name__)
+DONATION_PAYMENT_URL = "https://buy.stripe.com/14AaEQ6Cj6PFf6D7v4f3a05"
 
 
 class ConversionWorker(QObject):
@@ -106,6 +107,7 @@ class ConverterMainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self._setup_post_conversion_actions()
+        self._setup_donation_action()
         self._setup_quit_action()
         if self.use_settings:
             self._load_recent_values()
@@ -126,6 +128,7 @@ class ConverterMainWindow(QMainWindow):
 
         self.openGeneratedFileButton = QPushButton("Ouvrir le fichier généré")
         self.openGeneratedFolderButton = QPushButton("Ouvrir le dossier")
+        self.openDonationPageButton = QPushButton("Faire un don")
         self.copyLogsButton = QPushButton("Copier les logs")
         self.clearLogsButton = QPushButton("Effacer les logs")
         self.openGeneratedFileButton.setEnabled(False)
@@ -136,6 +139,7 @@ class ConverterMainWindow(QMainWindow):
         actions_layout.addWidget(self.openGeneratedFolderButton)
 
         logs_layout = QHBoxLayout()
+        logs_layout.addWidget(self.openDonationPageButton)
         logs_layout.addWidget(self.copyLogsButton)
         logs_layout.addWidget(self.clearLogsButton)
 
@@ -154,6 +158,11 @@ class ConverterMainWindow(QMainWindow):
         self.quit_action.setShortcut(QKeySequence.StandardKey.Quit)
         self.ui.menuQuitter.addAction(self.quit_action)
 
+    def _setup_donation_action(self) -> None:
+        # Ajoute une entrée "Faire un don" dans le menu Aide.
+        self.donation_action = QAction("Faire un don", self)
+        self.ui.menuAide.addAction(self.donation_action)
+
     def _connect_signals(self) -> None:
         # Connecte les interactions UI aux méthodes métier.
         self.ui.browseUiButton.clicked.connect(self._browse_ui_file)
@@ -166,8 +175,10 @@ class ConverterMainWindow(QMainWindow):
         self.batchModeCheckBox.stateChanged.connect(self._on_batch_mode_toggled)
         self.recursiveBatchCheckBox.stateChanged.connect(self._update_live_validation)
         self.ui.actionApropos.triggered.connect(self._show_about)
+        self.donation_action.triggered.connect(self._open_donation_page)
         self.openGeneratedFileButton.clicked.connect(self._open_generated_file)
         self.openGeneratedFolderButton.clicked.connect(self._open_generated_folder)
+        self.openDonationPageButton.clicked.connect(self._open_donation_page)
         self.copyLogsButton.clicked.connect(self._copy_logs_to_clipboard)
         self.clearLogsButton.clicked.connect(self._clear_logs)
         self.quit_action.triggered.connect(self.close)
@@ -611,6 +622,16 @@ class ConverterMainWindow(QMainWindow):
             return
 
         self._show_error(f"Impossible d'ouvrir le {label}: {path}")
+
+    def _open_donation_page(self) -> None:
+        # Ouvre le lien de paiement Stripe partagé pour les dons.
+        donation_url = QUrl(DONATION_PAYMENT_URL)
+        if QDesktopServices.openUrl(donation_url):
+            self._log_info(f"Ouverture de la page de don: {DONATION_PAYMENT_URL}")
+            self.statusBar().showMessage("Page de don ouverte dans le navigateur", 4000)
+            return
+
+        self._show_error("Impossible d'ouvrir la page de don Stripe.")
 
     def _show_about(self) -> None:
         # Affiche une boîte d'information simple sur l'application.
