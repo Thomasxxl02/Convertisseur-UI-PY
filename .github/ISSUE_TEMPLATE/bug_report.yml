@@ -1,0 +1,48 @@
+name: "Bug report"
+description: "Signaler un bug"
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Decris le probleme observe.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Etapes de reproduction
+      description: Liste les etapes pour reproduire le bug.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / traces
+      description: Colle les logs utiles si disponibles.
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environnement
+      description: OS, version Python, version app.
+      placeholder: "Ubuntu 24.04, Python 3.11"
+    validations:
+      required: false
