@@ -113,8 +113,9 @@ def create_checkout_session():
             success_url=success_url,
             cancel_url=cancel_url,
         )
-    except stripe.error.StripeError as exc:
-        return jsonify({"error": f"Erreur Stripe: {exc.user_message or str(exc)}"}), 502
+    except stripe.error.StripeError:
+        app.logger.exception("Erreur Stripe lors de la creation de session Checkout")
+        return jsonify({"error": "Erreur Stripe lors de la creation de session."}), 502
     except Exception:
         return jsonify({"error": "Erreur interne lors de la creation de session Stripe."}), 500
 

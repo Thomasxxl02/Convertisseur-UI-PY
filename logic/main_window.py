@@ -52,8 +52,9 @@ class ConversionWorker(QObject):
                 self.output_path,
                 append_preview_footer=self.include_preview_footer,
             )
-        except Exception as exc:  # noqa: BLE001
-            self.failed.emit(f"Erreur inattendue dans le worker: {exc}")
+        except Exception:  # noqa: BLE001
+            LOGGER.exception("Erreur inattendue dans le worker de conversion")
+            self.failed.emit("Erreur interne inattendue pendant la conversion.")
             return
 
         self.finished.emit(self.output_path, outcome)
@@ -86,8 +87,9 @@ class BatchConversionWorker(QObject):
                 recursive=self.recursive,
                 append_preview_footer=self.include_preview_footer,
             )
-        except Exception as exc:  # noqa: BLE001
-            self.failed.emit(f"Erreur inattendue dans le worker batch: {exc}")
+        except Exception:  # noqa: BLE001
+            LOGGER.exception("Erreur inattendue dans le worker de conversion batch")
+            self.failed.emit("Erreur interne inattendue pendant la conversion batch.")
             return
 
         self.finished.emit(outcome)

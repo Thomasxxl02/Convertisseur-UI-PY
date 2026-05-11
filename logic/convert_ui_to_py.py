@@ -252,7 +252,7 @@ def execute_conversion(
         return ConversionOutcome(
             success=False,
             exit_code=1,
-            user_message=f"Erreur système pendant la conversion: {exc}",
+            user_message="Erreur système pendant la conversion.",
             technical_details=repr(exc),
         )
 
